@@ -1,0 +1,25 @@
+package com.epam.rudenkov.controller;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+/**
+ * Created by sergei-rudenkov on 13.7.16.
+ */
+public class WelcomePageController extends HttpServlet{
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        out.println("<h1 style='text-align:center;'> Welcome to our BookStore </h1>");
+        out.println("<p style='text-align:center;'><img src='data:image/jpeg;base64,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' alt='books img' style='width:304px;height:228px;'></p>");
+        out.println("<form style='text-align:center;'>" +
+        "<a href='" + request.getContextPath() + "/books'>Buy books</a><br/><br/>" +
+        "<a href='"+ request.getContextPath() + "/sellerPage'>Sell books</a>" +
+        "</form>");
+    }
+}

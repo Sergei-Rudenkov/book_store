@@ -1,0 +1,89 @@
+<html>
+<head>
+    <title>Seller Page</title>
+</head>
+<body>
+<h1> For Sellers only: </h1>
+
+<table width="70%" border="0">
+    <form action="addBook" method="POST">
+        <tr>
+            <td>Add Book Name:</td>
+            <td><input type="text" name="name"></td>
+        </tr>
+        <tr>
+            <td>Add Id of Book Author:</td>
+            <td><input type="text" name="author_id"></td>
+        </tr>
+        <tr>
+            <td>Add Book Genre :</td>
+            <td><input type="text" name="genre"></td>
+        </tr>
+        <tr>
+            <td>Add Book Price :</td>
+            <td><input type="text" name="price"></td>
+        </tr>
+        <tr>
+            <td>Sold? (true/false):</td>
+            <td><input type="text" name="sold"></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit"/>
+        </tr>
+        </td>
+
+    </form>
+</table>
+
+<br>
+<table width="70%" border="0">
+    <form action="updateBook" method="POST">
+
+        <tr>
+            <td>Book Id :</td>
+            <td><input type="text" name="id"></td>
+        </tr>
+        <tr>
+            <td>Update Book Name :</td>
+            <td><input type="text" name="name"></td>
+        </tr>
+        <tr>
+            <td>Update Id of Book Author:</td>
+            <td><input type="text" name="author_id"></td>
+        </tr>
+        <tr>
+            <td>Update Book Genre :</td>
+            <td><input type="text" name="genre"></td>
+        </tr>
+        <tr>
+            <td>Update Book Price :</td>
+            <td><input type="text" name="price"></td>
+        </tr>
+        <tr>
+            <td>Sold? (true/false):</td>
+            <td><input type="text" name="sold"></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit"/>
+        </tr>
+        </td>
+    </form>
+</table>
+
+<br>
+<table width="70%" border="0">
+
+    <form action="removeBook" method="POST">
+        <tr>
+            <td>Remove Book by Id:</td>
+            <td><input type="text" name="id">
+        </tr>
+        </td>
+        <tr>
+            <td><input type="submit" value="Submit"/>
+        </tr>
+        </td>
+    </form>
+</table>
+</body>
+</html>
