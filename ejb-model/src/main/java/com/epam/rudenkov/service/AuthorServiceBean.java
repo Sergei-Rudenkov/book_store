@@ -12,7 +12,6 @@ import javax.persistence.PersistenceContextType;
 /**
  * Created by sergei-rudenkov on 30.6.16.
  */
-@WebService
 @Stateless(name = "AuthorServiceEJB")
 public class AuthorServiceBean implements AuthorServiceInterface {
 

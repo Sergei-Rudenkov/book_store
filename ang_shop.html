@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SPA book_store</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function ($scope, $http) {
+
+            $http.get("http://localhost:8080/book_store/rest/books_json/get")
+                    .then(function (response) {
+                        $scope.books = response.data;
+                    });
+            $scope.post = function(){
+                var requestBody = $scope.books.filter(function(book) {
+                    return book.isSelected;
+                });
+                requestBody.forEach(function (book) {
+                    book.isSelected = undefined;
+                });
+                $http.post("http://localhost:8080/book_store/rest/books_json",  requestBody)
+                        .then(function (response) {
+                            $scope.books = response.data;
+                        });
+            }
+        });
+
+    </script>
+</head>
+<body>
+
+
+<div class="container" ng-app="myApp" ng-controller="myCtrl">
+    <h1>Book Store</h1>
+    <p>Choice any book you like:</p>
+
+    <form id="buyBookForm" method="post">
+        <table id="table" class="table">
+            <thead>
+            <tr>
+                <th>Book Name</th>
+                <th>Author</th>
+                <th>Genre</th>
+                <th>Price</th>
+                <th>Sold</th>
+                <th>Bought By</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <input id="filter_input" type="text" ng-model="nameText"/>
+            <ul>
+                <tr ng-repeat="book in books | filter:nameText | orderBy:'name'">
+                        <td>
+                            <input ng-model="book.isSelected" type="checkbox" name="book{{book.name}}"
+                                   value="{{book.book_id}}" > <label>{{book.name}}</label>
+                        </td>
+                        <td>{{book.author.name}}</td>
+                        <td>{{book.genre}}</td>
+                        <td>{{book.price}}</td>
+                        <td>{{book.bought}}</td>
+                        <td>{{book.buyCount}}</td>
+                </tr>
+            </ul>
+            </tbody>
+        </table>
+
+    </form>
+    <input type="submit" name="submit" value="Purchase" id="call" ng-click="post()">
+     <br/>
+    <a href="#kolia">Test Route</a>
+
+    <div ng-view></div>
+</div>
+
+</body>
+</html>

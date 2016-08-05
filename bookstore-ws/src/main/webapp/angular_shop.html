@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="">
+<head>
+    <meta charset="UTF-8">
+    <title>SPA book_store</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope, $http) {
+        $http.get("http://localhost:8080/book_store/rest/books_json/get")
+                .then(function(response) {
+                    $scope.books = response.data;
+                });
+    });
+</script>
+
+<input id="filter_input" type="text" ng-model="nameText"/>
+<ul>
+    <li ng-repeat="book in books | filter:nameText | orderBy:'name'">
+        {{book.name}} - {{book.price}}
+    </li>
+</ul>
+
+</body>
+</html>

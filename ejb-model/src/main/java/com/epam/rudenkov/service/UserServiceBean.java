@@ -14,7 +14,6 @@ import java.util.List;
 /**
  * Created by sergei-rudenkov on 29.6.16.
  */
-@WebService
 @Stateless(name = "UserServiceEJB")
 public class UserServiceBean implements UserServiceInterface {
 

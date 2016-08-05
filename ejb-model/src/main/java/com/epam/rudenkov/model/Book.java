@@ -1,5 +1,7 @@
 package com.epam.rudenkov.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -35,15 +37,18 @@ public class Book implements Serializable{
     @Column(name = "genre")
     private String genre;
 
+    @Column(name = "buy_times")
+    private Long buyCount;
+
     @NotNull
     @Column(name = "price")
     private int price;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "User_BookHibernate",
-            joinColumns = {@JoinColumn(name = "user_id", nullable = false, updatable = false) },
-            inverseJoinColumns = { @JoinColumn(name = "book_id", nullable = false, updatable = false) })
-    private Set<User> users;
+//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinTable(name = "User_BookHibernate",
+//            joinColumns = {@JoinColumn(name = "user_id", nullable = false, updatable = false) },
+//            inverseJoinColumns = { @JoinColumn(name = "book_id", nullable = false, updatable = false) })
+//    private Set<User> users;
 
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="author_id")
@@ -90,13 +95,13 @@ public class Book implements Serializable{
     }
 
 
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
+//    public Set<User> getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(Set<User> users) {
+//        this.users = users;
+//    }
 
     public void setAuthor(Author author) {
         this.author = author;
@@ -106,6 +111,13 @@ public class Book implements Serializable{
         return this.author;
     }
 
+    public Long getBuyCount() {
+        return buyCount;
+    }
+
+    public void setBuyCount(Long buyCount) {
+        this.buyCount = buyCount;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -118,9 +130,10 @@ public class Book implements Serializable{
         if (price != book.price) return false;
         if (book_id != null ? !book_id.equals(book.book_id) : book.book_id != null) return false;
         if (name != null ? !name.equals(book.name) : book.name != null) return false;
-        if (author != null ? !author.equals(book.author) : book.author != null) return false;
         if (genre != null ? !genre.equals(book.genre) : book.genre != null) return false;
-        return users != null ? users.equals(book.users) : book.users == null;
+        if (buyCount != null ? !buyCount.equals(book.buyCount) : book.buyCount != null) return false;
+        return author != null ? author.equals(book.author) : book.author == null;
+
     }
 
     @Override
@@ -128,12 +141,11 @@ public class Book implements Serializable{
         int result = book_id != null ? book_id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (bought ? 1 : 0);
-        result = 31 * result + (author != null ? author.hashCode() : 0);
         result = 31 * result + (genre != null ? genre.hashCode() : 0);
+        result = 31 * result + (buyCount != null ? buyCount.hashCode() : 0);
         result = 31 * result + price;
+        result = 31 * result + (author != null ? author.hashCode() : 0);
         return result;
     }
-
-
 }
 

@@ -19,7 +19,6 @@ import java.util.List;
 /**
  * Created by sergei-rudenkov on 28.6.16.
  */
-@WebService
 @Stateless(name = "BuyerServiceEJB")
 public class BuyerServiceBean implements BuyerServiceInterface {
 
@@ -63,7 +62,7 @@ public class BuyerServiceBean implements BuyerServiceInterface {
         currentBook.setAuthor(editedBook.getAuthor());
         currentBook.setGenre(editedBook.getGenre());
         currentBook.setPrice(editedBook.getPrice());
-        currentBook.setUsers(editedBook.getUsers());
+        currentBook.setBuyCount(editedBook.getBuyCount());
         entityManager.persist(currentBook);
     }
 
@@ -80,7 +79,8 @@ public class BuyerServiceBean implements BuyerServiceInterface {
             for (Book book : books) {
                 if (book.getBook_id().toString().equals(paramValue)) {
                     logger.info(String.format("User '%s' going to buy book '%s'", userName, book.getName()));
-                    book.getUsers().add(userService.getUserByName(userName));
+                    book.setBuyCount(book.getBuyCount() + 1);
+                    userService.getUserByName(userName).getBooks().add(book);
                     updateBook(book.getBook_id(), book);
                     entityManager.persist(book);
                     return book.getPrice();

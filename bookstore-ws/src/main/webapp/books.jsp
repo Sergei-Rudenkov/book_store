@@ -6,24 +6,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Book Store</title>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </head>
 <body>
-<h1>Book Store</h1>
-
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('#call').click(function ()
-        {
+    $(document).ready(function () {
+        $('#call').click(function () {
             $.ajax({
                 type: "post",
                 url: "bought_ajax",
                 data: $('#buyBookForm').serialize(),
-                success: function(data) {
-                    for(var i = 0; i < document.getElementsByName("bought_column").length; i++){
+                success: function (data) {
+                    for (var i = 0; i < document.getElementsByName("bought_column").length; i++) {
                         document.getElementsByName("bought_column")[i].innerHTML = "Bought by: " + data["books_count"][i] + " user(s)";
                     }
                 },
@@ -51,42 +55,52 @@
     });
 </script>
 
-<form id="buyBookForm" action="books" method="post">
-<table id="table" width="70%" border="1">
-    <tr>
-        <th>Book Name</th>
-        <th>Author</th>
-        <th>Genre</th>
-        <th>Price</th>
-        <th>Sold</th>
-        <th>Bought By</th>
-    </tr>
-    <c:forEach items="${books}" var="book">
+
+<div class="container">
+    <h1>Book Store</h1>
+    <p>Choice any book you like:</p>
+
+    <form id="buyBookForm" action="books" method="post">
+    <table id="table" class="table">
+        <thead>
+        <tr>
+            <th>Book Name</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Price</th>
+            <th>Sold</th>
+            <th>Bought By</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${books}" var="book">
         <tr>
             <td>
-            <input type="checkbox" name="book${book.getName()}"
-                   value="${book.getBook_id()}"> <label>${book.getName()}</label>
+                <input type="checkbox" name="book${book.getName()}"
+                       value="${book.getBook_id()}"> <label>${book.getName()}</label>
             </td>
             <td>${book.getAuthor().getName()}</td>
             <td>${book.getGenre()}</td>
             <td>${book.getPrice()}</td>
             <td>${book.isBought()}</td>
-            <td name = "bought_column"><c:choose>
+            <td name="bought_column"><c:choose>
                 <c:when test="${book.getUsers().size() >= 1}">
                     Bought ${book.getUsers().size()} times.
-                    <br />
+                    <br/>
                 </c:when>
                 <c:otherwise>
                     Have never been bought.
-                    <br />
+                    <br/>
                 </c:otherwise>
             </c:choose></td>
         </tr>
-    </c:forEach>
-</table>
+        <tbody>
+        </c:forEach>
+    </table>
     <br/><br/>
     <input type="submit" name="submit" value="Purchase">
-</form>
+    </form>
+</div>
 <br/><br/>
 <input type="button" value="Purchase using AJAX" name="Purchase using AJAX" id="call"/>
 

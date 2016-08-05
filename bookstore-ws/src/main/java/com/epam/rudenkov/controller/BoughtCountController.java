@@ -41,7 +41,7 @@ public class BoughtCountController extends HttpServlet {
         List<Book> bookList = buyerService.listAllBooks();
         String jsonArrayString =  "{\"books_count\":[";
         for (int i = 0; i < bookList.size(); i++){
-            jsonArrayString += bookList.get(i).getUsers().size() + ",";
+            jsonArrayString += bookList.get(i).getBuyCount() + ",";
         }
         jsonArrayString = jsonArrayString.substring(0, jsonArrayString.length()-1);// replace last ','
         jsonArrayString += "]}";

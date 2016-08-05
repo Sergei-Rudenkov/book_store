@@ -34,7 +34,7 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="users")
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Book> books;
 
     public Long getUser_id() {
